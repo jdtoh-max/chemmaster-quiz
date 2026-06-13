@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>ChemMaster • O-Level Chemistry Quiz • 180 Questions</title>
+    <title>ChemMaster • O-Level Chemistry Quiz • 220 Questions</title>
     <style>
         * {
             box-sizing: border-box;
@@ -66,7 +66,7 @@
             border-radius: 40px;
             font-weight: 600;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
         .topic-btn.active { background: #2c7a4d; color: white; }
 
@@ -188,10 +188,27 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            position: relative;
+            cursor: help;
         }
         .badge.unlocked { background: #f5b042; color: #2c2c2c; font-weight: bold; }
         .badge.locked { opacity: 0.5; filter: grayscale(0.5); }
+        .badge:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            font-size: 0.7rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+            z-index: 100;
+            font-weight: normal;
+        }
         .shop-items {
             display: flex;
             gap: 16px;
@@ -229,6 +246,7 @@
             .question-text { font-size: 1.1rem; }
             .stats-bar { justify-content: center; }
             .bottom-actions { flex-direction: column; }
+            .topic-btn { font-size: 0.7rem; padding: 6px 12px; }
         }
 
         .music-player {
@@ -275,12 +293,13 @@
 </audio>
 
 <script>
+    // ==================== BACKGROUND MUSIC ====================
     const bgMusic = document.getElementById('bgMusic');
     const muteBtn = document.getElementById('muteToggleBtn');
     let isMuted = false;
 
     if (bgMusic) {
-        bgMusic.volume = 0.13;
+        bgMusic.volume = 0.15;
         bgMusic.loop = true;
         bgMusic.play().catch(e => console.log('Autoplay blocked'));
         const unlockAudio = function() {
@@ -304,11 +323,11 @@
         });
     }
 
-    // ==================== FULL QUESTION BANK (180 QUESTIONS) ====================
+    // ==================== FULL QUESTION BANK (220 QUESTIONS) ====================
     const QUESTION_SET = [
-        // Experimental Chemistry (20) - Keeping original 20 as provided earlier
+        // Topic 1: Experimental Chemistry (20)
         { id: "EXP_01", topic: "Experimental Chemistry", text: "Which apparatus is most suitable for measuring exactly 25.0 cm³ of a solution?", options: ["Measuring cylinder", "Burette", "Pipette", "Gas syringe"], correct: "C", explanation: "A pipette delivers a fixed, precise volume.", xp: 15, hint: "Fixed volume, not variable." },
-        { id: "EXP_02", topic: "Experimental Chemistry", text: "Which drying agent is suitable for drying basic gases like NH3?", options: ["Calcium oxide", "Fused calcium chloride", "Concentrated sulfuric acid", "Sodium chloride"], correct: "A", explanation: "CaO is a strong drying agent for basic gases.", xp: 15, hint: "Basic gas needs a basic drying agent." },
+        { id: "EXP_02", topic: "Experimental Chemistry", text: "Which drying agent is suitable for drying basic gases like NH₃?", options: ["Calcium oxide", "Fused calcium chloride", "Concentrated sulfuric acid", "Sodium chloride"], correct: "A", explanation: "CaO is a strong drying agent for basic gases.", xp: 15, hint: "Basic gas needs a basic drying agent." },
         { id: "EXP_03", topic: "Experimental Chemistry", text: "Which method separates a mixture of sand and sugar?", options: ["Sublimation", "Filtration followed by crystallisation", "Fractional distillation", "Separating funnel"], correct: "B", explanation: "Dissolve sugar, filter sand, crystallise sugar.", xp: 15, hint: "One dissolves in water, one doesn't." },
         { id: "EXP_04", topic: "Experimental Chemistry", text: "What is the purpose of a locating agent in paper chromatography?", options: ["Speed solvent", "Make colourless visible", "Increase Rf", "Bind stationary phase"], correct: "B", explanation: "Locating agents react with colourless substances to produce visible spots.", xp: 20, hint: "What if the compound has no colour?" },
         { id: "EXP_05", topic: "Experimental Chemistry", text: "Which mixture can be separated using a separating funnel?", options: ["Ethanol + water", "Oil + water", "Salt + sand", "Oxygen + nitrogen"], correct: "B", explanation: "Immiscible liquids form layers.", xp: 15, hint: "Do they mix completely?" },
@@ -328,29 +347,51 @@
         { id: "EXP_23", topic: "Experimental Chemistry", text: "Water bath for volatile liquid distillation?", options: ["Cheaper", "Even heat + no flame", "Faster", "Higher temp"], correct: "B", explanation: "Prevents flammable vapour ignition.", xp: 20, hint: "Alcohol is flammable." },
         { id: "EXP_24", topic: "Experimental Chemistry", text: "Which Bunsen flame is hotter?", options: ["Luminous (glows)", "Non-luminous (complete combustion)", "Luminous (incomplete)", "Same"], correct: "B", explanation: "Non-luminous has complete combustion, reaches 1300-1600°C.", xp: 15, hint: "Blue flame vs yellow." },
 
-        // Particulate Nature (20)
-        { id: "PNM_01", topic: "Particulate Nature", text: "Which process releases energy when gas → liquid?", options: ["Boiling", "Evaporation", "Condensation", "Sublimation"], correct: "C", explanation: "Condensation releases latent heat.", xp: 15, hint: "Gas to liquid = cooling." },
-        { id: "PNM_02", topic: "Particulate Nature", text: "Diffusion is fastest in which state?", options: ["Solid", "Liquid", "Gas", "Same"], correct: "C", explanation: "Gas particles move rapidly.", xp: 10, hint: "Particles far apart." },
-        { id: "PNM_03", topic: "Particulate Nature", text: "Why does KMnO₄ colour water without stirring?", options: ["Convection", "Diffusion", "Brownian motion", "Sedimentation"], correct: "B", explanation: "Ions diffuse from high to low concentration.", xp: 15, hint: "Spreading out." },
-        { id: "PNM_04", topic: "Particulate Nature", text: "Which diffuses fastest?", options: ["O₂", "CO₂", "H₂", "Cl₂"], correct: "C", explanation: "H₂ has smallest mass → fastest.", xp: 20, hint: "Lightest gas moves fastest." },
-        { id: "PNM_05", topic: "Particulate Nature", text: "Relative charge of a neutron?", options: ["+1", "-1", "0", "+2"], correct: "C", explanation: "Neutrons are neutral.", xp: 10, hint: "No charge." },
-        { id: "PNM_06", topic: "Particulate Nature", text: "Electrons in neutral atom with Z=12?", options: ["12", "24", "6", "10"], correct: "A", explanation: "Proton number = electron number.", xp: 10, hint: "Same as protons." },
-        { id: "PNM_07", topic: "Particulate Nature", text: "Which are isotopes?", options: ["¹²C and ¹⁴C", "¹⁴N and ¹⁴C", "H₂O and D₂O", "O₂ and O₃"], correct: "A", explanation: "Same element, different mass numbers.", xp: 15, hint: "Same protons, different neutrons." },
-        { id: "PNM_08", topic: "Particulate Nature", text: "Which shell is nearest to nucleus?", options: ["K", "L", "M", "N"], correct: "A", explanation: "K shell (n=1) is closest.", xp: 10, hint: "First shell." },
-        { id: "PNM_09", topic: "Particulate Nature", text: "Neutrons in ²³Na?", options: ["11", "12", "23", "34"], correct: "B", explanation: "23 - 11 = 12 neutrons.", xp: 15, hint: "Mass - protons = neutrons." },
-        { id: "PNM_10", topic: "Particulate Nature", text: "Why does warm perfume spread faster?", options: ["Particles slower", "Increased KE", "Larger particles", "Fewer collisions"], correct: "B", explanation: "Higher temp → faster particles.", xp: 15, hint: "Heat adds energy." },
-        { id: "PNM_11", topic: "Particulate Nature", text: "Which statement about Brownian motion is correct?", options: ["It only occurs in gases", "It is caused by collisions between particles", "It proves particles are stationary", "It stops at higher temperatures"], correct: "B", explanation: "Brownian motion is the random movement of particles caused by collisions with faster-moving molecules.", xp: 20, hint: "Visible under a microscope." },
-        { id: "PNM_12", topic: "Particulate Nature", text: "What happens to the rate of diffusion when temperature decreases?", options: ["Increases", "Decreases", "Stays the same", "Becomes zero"], correct: "B", explanation: "Lower temperature means particles have less kinetic energy, so they move slower and diffuse more slowly.", xp: 15, hint: "Cold particles move slower." },
-        { id: "PNM_13", topic: "Particulate Nature", text: "Which substance has the strongest forces between particles at room temperature?", options: ["Oxygen gas", "Water", "Iron", "Ethanol"], correct: "C", explanation: "Iron is a solid at room temperature with strong metallic bonds. Gases and liquids have much weaker intermolecular forces.", xp: 20, hint: "Solid vs liquid vs gas." },
-        { id: "PNM_14", topic: "Particulate Nature", text: "What is the relative mass of a proton compared to a neutron?", options: ["Much lighter", "Much heavier", "Approximately equal", "Exactly double"], correct: "C", explanation: "Protons and neutrons have approximately the same mass (about 1 atomic mass unit each).", xp: 10, hint: "Both are nucleons." },
-        { id: "PNM_15", topic: "Particulate Nature", text: "An atom has 17 protons and 18 neutrons. What is its nucleon (mass) number?", options: ["17", "18", "35", "1"], correct: "C", explanation: "Nucleon number = protons + neutrons = 17 + 18 = 35.", xp: 15, hint: "Add them together." },
-        { id: "PNM_16", topic: "Particulate Nature", text: "Which statement about electrons in an atom is correct?", options: ["They are found in the nucleus", "They have a positive charge", "They have negligible mass", "They determine the mass number"], correct: "C", explanation: "Electrons have very small mass (about 1/1836 of a proton) and occupy shells around the nucleus.", xp: 15, hint: "Very light particles." },
-        { id: "PNM_17", topic: "Particulate Nature", text: "Why does ice float on water?", options: ["Ice is colder than water", "Ice has a different crystal structure making it less dense", "Ice contains air bubbles", "Water molecules repel ice"], correct: "B", explanation: "Ice has an open hexagonal crystal structure that makes it less dense than liquid water, so it floats.", xp: 20, hint: "Density difference." },
-        { id: "PNM_18", topic: "Particulate Nature", text: "Which change of state requires the most energy input?", options: ["Melting", "Freezing", "Condensation", "Evaporation"], correct: "D", explanation: "Evaporation (liquid to gas) requires breaking most intermolecular forces, so it absorbs the most energy.", xp: 20, hint: "Gas particles are very far apart." },
-        { id: "PNM_19", topic: "Particulate Nature", text: "What does the zigzag line in a heating curve represent?", options: ["A change of state", "Temperature increase", "No energy input", "Chemical reaction"], correct: "B", explanation: "The sloped (zigzag) line shows temperature rising as particles gain kinetic energy before a state change.", xp: 15, hint: "Flat lines = state change." },
-        { id: "PNM_20", topic: "Particulate Nature", text: "Isotopes of the same element have the same number of:", options: ["Protons but different neutrons", "Neutrons but different protons", "Electrons but different protons", "Nucleons but different protons"], correct: "A", explanation: "Isotopes have same proton number (same element) but different neutron numbers.", xp: 10, hint: "Same element = same protons." },
+        // Topic 2: Kinetic Particle Theory (20)
+        { id: "KPT_01", topic: "Kinetic Particle Theory", text: "Which process releases energy when gas → liquid?", options: ["Boiling", "Evaporation", "Condensation", "Sublimation"], correct: "C", explanation: "Condensation releases latent heat.", xp: 15, hint: "Gas to liquid = cooling." },
+        { id: "KPT_02", topic: "Kinetic Particle Theory", text: "Diffusion is fastest in which state?", options: ["Solid", "Liquid", "Gas", "Same"], correct: "C", explanation: "Gas particles move rapidly.", xp: 10, hint: "Particles far apart." },
+        { id: "KPT_03", topic: "Kinetic Particle Theory", text: "Why does KMnO₄ colour water without stirring?", options: ["Convection", "Diffusion", "Brownian motion", "Sedimentation"], correct: "B", explanation: "Ions diffuse from high to low concentration.", xp: 15, hint: "Spreading out." },
+        { id: "KPT_04", topic: "Kinetic Particle Theory", text: "Which diffuses fastest?", options: ["O₂", "CO₂", "H₂", "Cl₂"], correct: "C", explanation: "H₂ has smallest mass → fastest.", xp: 20, hint: "Lightest gas moves fastest." },
+        { id: "KPT_05", topic: "Kinetic Particle Theory", text: "Which statement about Brownian motion is correct?", options: ["It only occurs in gases", "It is caused by collisions between particles", "It proves particles are stationary", "It stops at higher temperatures"], correct: "B", explanation: "Brownian motion is the random movement of particles caused by collisions with faster-moving molecules.", xp: 20, hint: "Visible under a microscope." },
+        { id: "KPT_06", topic: "Kinetic Particle Theory", text: "What happens to the rate of diffusion when temperature decreases?", options: ["Increases", "Decreases", "Stays the same", "Becomes zero"], correct: "B", explanation: "Lower temperature means particles have less kinetic energy, so they move slower and diffuse more slowly.", xp: 15, hint: "Cold particles move slower." },
+        { id: "KPT_07", topic: "Kinetic Particle Theory", text: "Which substance has the strongest forces between particles at room temperature?", options: ["Oxygen gas", "Water", "Iron", "Ethanol"], correct: "C", explanation: "Iron is a solid at room temperature with strong metallic bonds.", xp: 20, hint: "Solid vs liquid vs gas." },
+        { id: "KPT_08", topic: "Kinetic Particle Theory", text: "Why does ice float on water?", options: ["Ice is colder than water", "Ice has a different crystal structure making it less dense", "Ice contains air bubbles", "Water molecules repel ice"], correct: "B", explanation: "Ice has an open hexagonal crystal structure that makes it less dense than liquid water.", xp: 20, hint: "Density difference." },
+        { id: "KPT_09", topic: "Kinetic Particle Theory", text: "Which change of state requires the most energy input?", options: ["Melting", "Freezing", "Condensation", "Evaporation"], correct: "D", explanation: "Evaporation (liquid to gas) requires breaking most intermolecular forces.", xp: 20, hint: "Gas particles are very far apart." },
+        { id: "KPT_10", topic: "Kinetic Particle Theory", text: "What does the zigzag line in a heating curve represent?", options: ["A change of state", "Temperature increase", "No energy input", "Chemical reaction"], correct: "B", explanation: "The sloped line shows temperature rising as particles gain kinetic energy.", xp: 15, hint: "Flat lines = state change." },
+        { id: "KPT_11", topic: "Kinetic Particle Theory", text: "Which statement about particles in a solid is correct?", options: ["They are far apart and move freely", "They are close together and vibrate about fixed positions", "They are close together and move randomly", "They have no kinetic energy"], correct: "B", explanation: "In solids, particles are tightly packed and only vibrate around fixed positions.", xp: 10, hint: "Fixed shape and volume." },
+        { id: "KPT_12", topic: "Kinetic Particle Theory", text: "Which statement about particles in a liquid is correct?", options: ["They are far apart and move randomly at high speeds", "They are close together and can slide past each other", "They are in fixed positions and vibrate", "They have no kinetic energy"], correct: "B", explanation: "In liquids, particles are close together but can move and slide past each other, allowing flow.", xp: 10, hint: "Takes shape of container." },
+        { id: "KPT_13", topic: "Kinetic Particle Theory", text: "Which statement about particles in a gas is correct?", options: ["They are far apart and move randomly at high speeds", "They are close together and vibrate", "They are close together and slide past each other", "They are in fixed positions"], correct: "A", explanation: "Gas particles are widely spaced and move rapidly and randomly in all directions.", xp: 10, hint: "Fills container completely." },
+        { id: "KPT_14", topic: "Kinetic Particle Theory", text: "What happens to the kinetic energy of particles during melting?", options: ["It decreases", "It increases", "It stays constant", "It becomes zero"], correct: "B", explanation: "During melting, heat energy is absorbed and converted into kinetic energy, so particles move more.", xp: 15, hint: "Solid to liquid." },
+        { id: "KPT_15", topic: "Kinetic Particle Theory", text: "On a heating curve, the flat horizontal line represents:", options: ["Temperature increase", "A change of state", "Decrease in kinetic energy", "Cooling"], correct: "B", explanation: "Flat lines on a heating curve indicate a change of state (melting or boiling).", xp: 15, hint: "Plateau." },
+        { id: "KPT_16", topic: "Kinetic Particle Theory", text: "Which factor does NOT affect the rate of diffusion?", options: ["Temperature", "Molecular mass", "Colour of the gas", "Concentration gradient"], correct: "C", explanation: "Colour of a gas does not affect diffusion rate.", xp: 15, hint: "Physical property vs chemical." },
+        { id: "KPT_17", topic: "Kinetic Particle Theory", text: "According to Graham's law, which gas diffuses fastest at the same temperature?", options: ["Oxygen (O₂, Mr=32)", "Nitrogen (N₂, Mr=28)", "Helium (He, Mr=4)", "Carbon dioxide (CO₂, Mr=44)"], correct: "C", explanation: "Lighter gases diffuse faster. Helium has the smallest molecular mass.", xp: 20, hint: "Lightest gas." },
+        { id: "KPT_18", topic: "Kinetic Particle Theory", text: "Why does a balloon deflate faster in a warm room than in a cold room?", options: ["The balloon material is weaker when warm", "Gas particles have more kinetic energy and escape faster", "Warm air is less dense", "The balloon expands and cracks"], correct: "B", explanation: "Higher temperature increases kinetic energy of gas particles, causing them to escape faster.", xp: 15, hint: "Particles move faster when hot." },
+        { id: "KPT_19", topic: "Kinetic Particle Theory", text: "Which diagram best represents the arrangement of particles in a gas?", options: ["Tightly packed in rows", "Close together but disordered", "Far apart and randomly arranged", "Layers sliding over each other"], correct: "C", explanation: "Gas particles are far apart and randomly arranged with no fixed pattern.", xp: 10, hint: "Largest distance between particles." },
+        { id: "KPT_20", topic: "Kinetic Particle Theory", text: "What happens to the rate of diffusion when the concentration gradient increases?", options: ["Increases", "Decreases", "Stays the same", "Becomes zero"], correct: "A", explanation: "A steeper concentration gradient means particles move from high to low concentration more quickly.", xp: 15, hint: "Bigger difference = faster movement." },
 
-        // Chemical Bonding (20)
+        // Topic 3: Atomic Structure (20)
+        { id: "ATOM_01", topic: "Atomic Structure", text: "What is the relative charge of a proton?", options: ["+1", "-1", "0", "+2"], correct: "A", explanation: "A proton has a relative charge of +1.", xp: 10, hint: "Positive particle in nucleus." },
+        { id: "ATOM_02", topic: "Atomic Structure", text: "What is the relative charge of an electron?", options: ["+1", "-1", "0", "-2"], correct: "B", explanation: "An electron has a relative charge of -1.", xp: 10, hint: "Negative particle orbiting nucleus." },
+        { id: "ATOM_03", topic: "Atomic Structure", text: "What is the relative charge of a neutron?", options: ["+1", "-1", "0", "+2"], correct: "C", explanation: "A neutron has no charge (neutral).", xp: 10, hint: "No charge." },
+        { id: "ATOM_04", topic: "Atomic Structure", text: "What is the approximate relative mass of a proton?", options: ["1", "0", "1/1840", "1840"], correct: "A", explanation: "A proton has a relative mass of approximately 1 atomic mass unit.", xp: 10, hint: "Same as neutron." },
+        { id: "ATOM_05", topic: "Atomic Structure", text: "What is the approximate relative mass of an electron?", options: ["1", "0", "1/1840", "1840"], correct: "C", explanation: "An electron has a very small relative mass, approximately 1/1840 of a proton.", xp: 15, hint: "Very light particle." },
+        { id: "ATOM_06", topic: "Atomic Structure", text: "Where are protons and neutrons located in an atom?", options: ["In the nucleus", "In electron shells", "Spread throughout the atom", "In the cloud around the nucleus"], correct: "A", explanation: "Protons and neutrons are found in the nucleus at the centre of the atom.", xp: 10, hint: "Centre of atom." },
+        { id: "ATOM_07", topic: "Atomic Structure", text: "Where are electrons located in an atom?", options: ["In the nucleus", "In shells around the nucleus", "Mixed with protons", "At the centre"], correct: "B", explanation: "Electrons occupy shells (energy levels) around the nucleus.", xp: 10, hint: "Orbit the nucleus." },
+        { id: "ATOM_08", topic: "Atomic Structure", text: "What is the proton (atomic) number of an atom with 8 protons?", options: ["4", "8", "16", "24"], correct: "B", explanation: "Proton number = number of protons = 8.", xp: 10, hint: "Same as number of protons." },
+        { id: "ATOM_09", topic: "Atomic Structure", text: "What is the nucleon (mass) number of an atom with 8 protons and 8 neutrons?", options: ["8", "16", "24", "0"], correct: "B", explanation: "Nucleon number = protons + neutrons = 8 + 8 = 16.", xp: 10, hint: "Add protons and neutrons." },
+        { id: "ATOM_10", topic: "Atomic Structure", text: "How many electrons are in a neutral atom with proton number 11?", options: ["10", "11", "12", "23"], correct: "B", explanation: "In a neutral atom, number of electrons = number of protons = 11.", xp: 10, hint: "Equal to protons." },
+        { id: "ATOM_11", topic: "Atomic Structure", text: "What does the nuclide notation ²³Na represent?", options: ["Mass number 11, proton number 23", "Mass number 23, proton number 11", "23 neutrons, 11 protons", "11 neutrons, 23 protons"], correct: "B", explanation: "Top number is mass number (23), bottom number is proton number (11).", xp: 15, hint: "Top = mass, bottom = atomic." },
+        { id: "ATOM_12", topic: "Atomic Structure", text: "How many neutrons are in an atom of ³⁵Cl? (proton number of Cl = 17)", options: ["17", "18", "35", "52"], correct: "B", explanation: "Neutrons = mass number - proton number = 35 - 17 = 18.", xp: 15, hint: "Mass minus protons." },
+        { id: "ATOM_13", topic: "Atomic Structure", text: "Which statement about isotopes is correct?", options: ["Same number of protons, different number of electrons", "Same number of protons, different number of neutrons", "Same number of neutrons, different number of protons", "Same number of electrons, different number of protons"], correct: "B", explanation: "Isotopes are atoms of the same element with the same number of protons but different numbers of neutrons.", xp: 15, hint: "Same element, different mass." },
+        { id: "ATOM_14", topic: "Atomic Structure", text: "Which pair are isotopes of carbon?", options: ["¹²C and ¹⁴C", "¹²C and ¹⁴N", "¹²C and C₆₀", "¹²C and CO₂"], correct: "A", explanation: "¹²C and ¹⁴C have the same proton number (6) but different mass numbers.", xp: 15, hint: "Same element, different neutrons." },
+        { id: "ATOM_15", topic: "Atomic Structure", text: "How many electrons are in the outermost shell of a sodium atom (proton number 11)?", options: ["1", "2", "7", "8"], correct: "A", explanation: "Electronic configuration of Na is 2,8,1 — so 1 electron in the outermost shell.", xp: 15, hint: "Group 1 element." },
+        { id: "ATOM_16", topic: "Atomic Structure", text: "How many electrons are in the outermost shell of a chlorine atom (proton number 17)?", options: ["1", "2", "7", "8"], correct: "C", explanation: "Electronic configuration of Cl is 2,8,7 — so 7 electrons in the outermost shell.", xp: 15, hint: "Group 17 element." },
+        { id: "ATOM_17", topic: "Atomic Structure", text: "What is the electronic configuration of an argon atom (proton number 18)?", options: ["2,8,8", "2,8,6", "2,8,7", "2,8,18"], correct: "A", explanation: "Argon has 18 electrons arranged as 2 in first shell, 8 in second, 8 in third.", xp: 15, hint: "Noble gas." },
+        { id: "ATOM_18", topic: "Atomic Structure", text: "An atom has 9 protons and 10 neutrons. What is its mass number?", options: ["9", "10", "19", "1"], correct: "C", explanation: "Mass number = protons + neutrons = 9 + 10 = 19.", xp: 10, hint: "Add them together." },
+        { id: "ATOM_19", topic: "Atomic Structure", text: "An atom has 12 protons and 12 neutrons. What is its proton number?", options: ["12", "24", "0", "1"], correct: "A", explanation: "Proton number = number of protons = 12.", xp: 10, hint: "Same as number of protons." },
+        { id: "ATOM_20", topic: "Atomic Structure", text: "How many electrons are in a fluoride ion F⁻? (Proton number of F = 9)", options: ["8", "9", "10", "19"], correct: "C", explanation: "F⁻ has gained 1 electron: 9 + 1 = 10 electrons.", xp: 15, hint: "Negative ion has gained electrons." },
+
+        // Topic 4: Chemical Bonding (20)
         { id: "BOND_01", topic: "Chemical Bonding", text: "Which pair forms ionic bonds?", options: ["C and O", "Na and Cl", "H and Cl", "S and O"], correct: "B", explanation: "Metal + non-metal → electron transfer.", xp: 15, hint: "Metal + non-metal." },
         { id: "BOND_02", topic: "Chemical Bonding", text: "What holds ions together in NaCl?", options: ["Sharing electrons", "Sea of electrons", "Electrostatic attraction", "Van der Waals"], correct: "C", explanation: "Opposite charges attract.", xp: 15, hint: "Opposites attract." },
         { id: "BOND_03", topic: "Chemical Bonding", text: "Highest melting point?", options: ["Methane", "Water", "Diamond", "Iodine"], correct: "C", explanation: "Giant covalent structure needs lots of energy.", xp: 20, hint: "Hardest natural substance." },
@@ -361,19 +402,19 @@
         { id: "BOND_08", topic: "Chemical Bonding", text: "Which conducts when molten but not solid?", options: ["SiO₂", "NaCl", "Copper", "Iodine"], correct: "B", explanation: "Ions mobile when molten.", xp: 20, hint: "Ionic compound." },
         { id: "BOND_09", topic: "Chemical Bonding", text: "Metallic bonding allows?", options: ["High solubility", "Malleability", "Low density", "Brittleness"], correct: "B", explanation: "Layers of ions can slide.", xp: 15, hint: "Can be hammered into sheets." },
         { id: "BOND_10", topic: "Chemical Bonding", text: "Which is simple molecular?", options: ["SiO₂", "Diamond", "I₂", "MgO"], correct: "C", explanation: "Iodine exists as I₂ molecules.", xp: 15, hint: "Sublimes easily." },
-        { id: "BOND_11", topic: "Chemical Bonding", text: "Which substance has a giant covalent structure?", options: ["Water", "Carbon dioxide", "Silicon dioxide", "Oxygen"], correct: "C", explanation: "Silicon dioxide (sand) has a giant covalent lattice structure like diamond.", xp: 20, hint: "Sand is SiO₂." },
-        { id: "BOND_12", topic: "Chemical Bonding", text: "Why do ionic compounds conduct electricity when molten but not when solid?", options: ["Electrons can move freely when molten", "Ions are mobile when molten but fixed in lattice when solid", "The compound decomposes when molten", "Heat creates free electrons"], correct: "B", explanation: "Ions are held in fixed positions in the solid lattice but can move freely when molten, allowing charge to flow.", xp: 20, hint: "Need charged particles that can move." },
-        { id: "BOND_13", topic: "Chemical Bonding", text: "Which molecule contains a coordinate (dative) covalent bond?", options: ["H₂O", "NH₄⁺", "CH₄", "CO₂"], correct: "B", explanation: "The ammonium ion (NH₄⁺) forms when NH₃ donates a lone pair to H⁺, creating a coordinate bond.", xp: 25, hint: "Both electrons come from the same atom." },
-        { id: "BOND_14", topic: "Chemical Bonding", text: "What type of bonding occurs in a metal?", options: ["Ionic bonding", "Covalent bonding", "Metallic bonding", "Hydrogen bonding"], correct: "C", explanation: "Metals consist of positive ions surrounded by a 'sea of delocalised electrons' — this is metallic bonding.", xp: 10, hint: "Sea of electrons." },
-        { id: "BOND_15", topic: "Chemical Bonding", text: "Which property is typical of simple molecular substances?", options: ["High melting point", "Conduct electricity", "Low boiling point", "Hard and strong"], correct: "C", explanation: "Simple molecular substances have weak intermolecular forces, so they have low melting and boiling points.", xp: 15, hint: "Weak forces between molecules." },
-        { id: "BOND_16", topic: "Chemical Bonding", text: "How many covalent bonds does a carbon atom typically form in organic compounds?", options: ["2", "3", "4", "6"], correct: "C", explanation: "Carbon has 4 valence electrons and forms 4 covalent bonds to achieve a full outer shell.", xp: 10, hint: "Tetravalent." },
-        { id: "BOND_17", topic: "Chemical Bonding", text: "Which substance is most likely to be soluble in water?", options: ["Hexane (C₆H₁₄)", "Iodine (I₂)", "Sodium chloride (NaCl)", "Polyethene"], correct: "C", explanation: "Ionic compounds like NaCl are polar and dissolve in polar water. Non-polar substances like hexane and iodine do not.", xp: 20, hint: "Like dissolves like." },
-        { id: "BOND_18", topic: "Chemical Bonding", text: "What is the formula of the ion formed when a magnesium atom loses two electrons?", options: ["Mg⁺", "Mg²⁺", "Mg⁻", "Mg²⁻"], correct: "B", explanation: "Magnesium (Group 2) loses 2 electrons to form Mg²⁺ with a noble gas configuration.", xp: 10, hint: "Group 2 elements." },
-        { id: "BOND_19", topic: "Chemical Bonding", text: "Which diagram correctly shows the dot-and-cross for methane (CH₄)?", options: ["C shares 1 electron with each H", "C shares 4 electrons total, H shares 1 each", "C donates electrons to H", "C and H form ionic bonds"], correct: "B", explanation: "Carbon shares one pair of electrons with each hydrogen atom, forming 4 single covalent bonds.", xp: 20, hint: "Four single bonds." },
-        { id: "BOND_20", topic: "Chemical Bonding", text: "Why are alloys harder than pure metals?", options: ["Alloys have more electrons", "Different sized atoms disrupt the regular lattice, preventing layers from sliding", "Alloys are heated more during production", "Alloys contain covalent bonds"], correct: "B", explanation: "Different atomic sizes distort the metal lattice, making it harder for layers to slide past each other.", xp: 20, hint: "Layers can't slide easily." },
+        { id: "BOND_11", topic: "Chemical Bonding", text: "Which substance has a giant covalent structure?", options: ["Water", "Carbon dioxide", "Silicon dioxide", "Oxygen"], correct: "C", explanation: "Silicon dioxide (sand) has a giant covalent lattice.", xp: 20, hint: "Sand is SiO₂." },
+        { id: "BOND_12", topic: "Chemical Bonding", text: "Why do ionic compounds conduct electricity when molten but not when solid?", options: ["Electrons can move freely when molten", "Ions are mobile when molten but fixed in lattice when solid", "The compound decomposes when molten", "Heat creates free electrons"], correct: "B", explanation: "Ions are held in fixed positions in the solid lattice but can move freely when molten.", xp: 20, hint: "Need charged particles that can move." },
+        { id: "BOND_13", topic: "Chemical Bonding", text: "Which molecule contains a coordinate (dative) covalent bond?", options: ["H₂O", "NH₄⁺", "CH₄", "CO₂"], correct: "B", explanation: "The ammonium ion (NH₄⁺) forms when NH₃ donates a lone pair to H⁺.", xp: 25, hint: "Both electrons come from the same atom." },
+        { id: "BOND_14", topic: "Chemical Bonding", text: "What type of bonding occurs in a metal?", options: ["Ionic bonding", "Covalent bonding", "Metallic bonding", "Hydrogen bonding"], correct: "C", explanation: "Metals consist of positive ions surrounded by a 'sea of delocalised electrons'.", xp: 10, hint: "Sea of electrons." },
+        { id: "BOND_15", topic: "Chemical Bonding", text: "Which property is typical of simple molecular substances?", options: ["High melting point", "Conduct electricity", "Low boiling point", "Hard and strong"], correct: "C", explanation: "Simple molecular substances have weak intermolecular forces, so low melting/boiling points.", xp: 15, hint: "Weak forces between molecules." },
+        { id: "BOND_16", topic: "Chemical Bonding", text: "How many covalent bonds does a carbon atom typically form in organic compounds?", options: ["2", "3", "4", "6"], correct: "C", explanation: "Carbon has 4 valence electrons and forms 4 covalent bonds.", xp: 10, hint: "Tetravalent." },
+        { id: "BOND_17", topic: "Chemical Bonding", text: "Which substance is most likely to be soluble in water?", options: ["Hexane (C₆H₁₄)", "Iodine (I₂)", "Sodium chloride (NaCl)", "Polyethene"], correct: "C", explanation: "Ionic compounds like NaCl are polar and dissolve in polar water.", xp: 20, hint: "Like dissolves like." },
+        { id: "BOND_18", topic: "Chemical Bonding", text: "What is the formula of the ion formed when a magnesium atom loses two electrons?", options: ["Mg⁺", "Mg²⁺", "Mg⁻", "Mg²⁻"], correct: "B", explanation: "Magnesium (Group 2) loses 2 electrons to form Mg²⁺.", xp: 10, hint: "Group 2 elements." },
+        { id: "BOND_19", topic: "Chemical Bonding", text: "Which diagram correctly shows the dot-and-cross for methane (CH₄)?", options: ["C shares 1 electron with each H", "C shares 4 electrons total, H shares 1 each", "C donates electrons to H", "C and H form ionic bonds"], correct: "B", explanation: "Carbon shares one pair of electrons with each hydrogen atom.", xp: 20, hint: "Four single bonds." },
+        { id: "BOND_20", topic: "Chemical Bonding", text: "Why are alloys harder than pure metals?", options: ["Alloys have more electrons", "Different sized atoms disrupt the regular lattice, preventing layers from sliding", "Alloys are heated more during production", "Alloys contain covalent bonds"], correct: "B", explanation: "Different atomic sizes distort the metal lattice, making it harder for layers to slide.", xp: 20, hint: "Layers can't slide easily." },
 
-        // Chemical Calculations (20)
-        { id: "CALC_01", topic: "Chemical Calculations", text: "Relative atomic mass of carbon is 12. What does this mean?", options: ["Mass of one C atom is 12g", "Average mass of C atom is 1/12 of C-12", "C atom is 12 × H atom", "C has 12 neutrons"], correct: "B", explanation: "Ar = average mass / (1/12 mass of C-12).", xp: 15, hint: "Standard reference." },
+        // Topic 5: Chemical Calculations (20)
+        { id: "CALC_01", topic: "Chemical Calculations", text: "Relative atomic mass of oxygen is 16. What does this mean?", options: ["Mass of one O atom is 16g", "Average mass of O atom is 16 times of 1/12 of C-12", "O atom is 16 × H atom", "O has 12 neutrons"], correct: "B", explanation: "Ar = average mass / (1/12 mass of C-12).", xp: 15, hint: "Standard reference." },
         { id: "CALC_02", topic: "Chemical Calculations", text: "Calculate Mr of Ca(OH)₂ (Ca=40, O=16, H=1)", options: ["57", "74", "58", "73"], correct: "B", explanation: "40 + 2×(16+1) = 74.", xp: 15, hint: "Add all atomic masses." },
         { id: "CALC_03", topic: "Chemical Calculations", text: "Moles in 4g NaOH (Mr=40)?", options: ["0.1", "0.2", "1", "10"], correct: "A", explanation: "4/40 = 0.1 mol.", xp: 15, hint: "Mass ÷ Mr = moles." },
         { id: "CALC_04", topic: "Chemical Calculations", text: "Empirical formula of C₆H₁₂O₆?", options: ["CH₂O", "C₂H₄O₂", "C₃H₆O₃", "CHO"], correct: "A", explanation: "Divide all subscripts by 6.", xp: 15, hint: "Simplify ratio." },
@@ -394,7 +435,7 @@
         { id: "CALC_19", topic: "Chemical Calculations", text: "If 5 g of product is obtained but the theoretical yield is 10 g, what is the percentage yield?", options: ["5%", "50%", "100%", "200%"], correct: "B", explanation: "% yield = (actual/theoretical) × 100 = (5/10) × 100 = 50%.", xp: 10, hint: "Actual ÷ theoretical × 100." },
         { id: "CALC_20", topic: "Chemical Calculations", text: "What mass of oxygen is needed to completely react with 24 g of magnesium? (2Mg + O₂ → 2MgO, Mg=24, O=16)", options: ["8 g", "16 g", "32 g", "64 g"], correct: "B", explanation: "Moles Mg = 24/24 = 1. Ratio 2:1 → moles O₂ = 0.5. Mass O₂ = 0.5 × 32 = 16 g.", xp: 20, hint: "Use the balanced equation ratio." },
 
-        // Acid-Base (20)
+        // Topic 6: Acid-Base (20)
         { id: "ACID_01", topic: "Acid-Base", text: "An alkali produces which ions in water?", options: ["H⁺", "OH⁻", "Cl⁻", "Na⁺"], correct: "B", explanation: "Alkali = soluble base producing OH⁻.", xp: 15, hint: "Opposite of acid." },
         { id: "ACID_02", topic: "Acid-Base", text: "pH 3 is how many × more acidic than pH 5?", options: ["2×", "10×", "100×", "20×"], correct: "C", explanation: "Each pH unit = 10× in [H⁺].", xp: 20, hint: "Logarithmic scale." },
         { id: "ACID_03", topic: "Acid-Base", text: "Which is a weak acid?", options: ["HCl", "H₂SO₄", "CH₃COOH", "HNO₃"], correct: "C", explanation: "Ethanoic acid partially ionises.", xp: 15, hint: "Vinegar contains this." },
@@ -405,40 +446,62 @@
         { id: "ACID_08", topic: "Acid-Base", text: "Which pH value represents a neutral solution at 25°C?", options: ["0", "7", "14", "1"], correct: "B", explanation: "pH 7 = [H⁺] = [OH⁻].", xp: 10, hint: "Pure water pH." },
         { id: "ACID_09", topic: "Acid-Base", text: "Which statement about bases is correct?", options: ["All bases are soluble in water", "Bases react with acids to form salt and water", "Bases turn blue litmus red", "Bases have pH below 7"], correct: "B", explanation: "Neutralisation reaction: base + acid → salt + water.", xp: 15, hint: "Opposite of acids." },
         { id: "ACID_10", topic: "Acid-Base", text: "Calcium hydroxide is used to neutralise soil acidity. What type of substance is it?", options: ["Acid", "Base", "Salt", "Oxidising agent"], correct: "B", explanation: "Calcium hydroxide (slaked lime) is a base that neutralises acidic soil.", xp: 15, hint: "Used in farming to 'sweeten' soil." },
-        { id: "ACID_11", topic: "Acid-Base", text: "Which compound is an amphoteric oxide?", options: ["Sodium oxide (Na₂O)", "Carbon dioxide (CO₂)", "Aluminium oxide (Al₂O₃)", "Magnesium oxide (MgO)"], correct: "C", explanation: "Aluminium oxide reacts with both acids (as a base) and bases (as an acid).", xp: 20, hint: "Reacts with both HCl and NaOH." },
+        { id: "ACID_11", topic: "Acid-Base", text: "Which compound is an amphoteric oxide?", options: ["Sodium oxide (Na₂O)", "Carbon dioxide (CO₂)", "Zinc oxide (ZnO)", "Magnesium oxide (MgO)"], correct: "C", explanation: "Zinc oxide reacts with both acids (as a base) and bases (as an acid).", xp: 20, hint: "Reacts with both HCl and NaOH." },
         { id: "ACID_12", topic: "Acid-Base", text: "Which acid is diprotic?", options: ["HCl", "HNO₃", "H₂SO₄", "CH₃COOH"], correct: "C", explanation: "Diprotic acids donate 2 H⁺ ions per molecule. H₂SO₄ is diprotic.", xp: 15, hint: "Two hydrogen atoms that can ionise." },
         { id: "ACID_13", topic: "Acid-Base", text: "What is the colour of universal indicator in a strong alkali?", options: ["Red", "Yellow", "Green", "Purple"], correct: "D", explanation: "Universal indicator is purple in strong alkalis (pH 13-14) and red in strong acids.", xp: 10, hint: "High pH." },
-        { id: "ACID_14", topic: "Acid-Base", text: "Which salt is produced when magnesium reacts with nitric acid?", options: ["Magnesium nitrate", "Magnesium chloride", "Magnesium sulfate", "Magnesium oxide"], correct: "A", explanation: "Metal + acid → salt + hydrogen. So Mg + 2HNO₃ → Mg(NO₃)₂ + H₂.", xp: 15, hint: "Nitric acid produces nitrate salts." },
-        { id: "ACID_15", topic: "Acid-Base", text: "Which oxide is neutral?", options: ["CO₂", "Na₂O", "H₂O", "Al₂O₃"], correct: "C", explanation: "Water (H₂O) is a neutral oxide. CO₂ is acidic, Na₂O is basic, Al₂O₃ is amphoteric.", xp: 15, hint: "Neither acidic nor basic." },
+        { id: "ACID_14", topic: "Acid-Base", text: "Which salt is produced when magnesium carbonate reacts with nitric acid?", options: ["Mg(NO₃)₂", "MgCl₂", "MgSO₄", "MgO"], correct: "A", explanation: "MgCO₃ + 2HNO₃ → Mg(NO₃)₂ + H₂O + CO₂. The salt is magnesium nitrate.", xp: 15, hint: "Nitric acid produces nitrate salts." },
+        { id: "ACID_15", topic: "Acid-Base", text: "Which oxide is neutral?", options: ["CO₂", "Na₂O", "CO", "Al₂O₃"], correct: "C", explanation: "Carbon monoxide (CO) is a neutral oxide. CO₂ is acidic, Na₂O is basic, Al₂O₃ is amphoteric.", xp: 15, hint: "Neither acidic nor basic." },
         { id: "ACID_16", topic: "Acid-Base", text: "What is the pH of a solution with [H⁺] = 0.001 mol/dm³?", options: ["1", "2", "3", "4"], correct: "C", explanation: "pH = -log[H⁺]. For [H⁺] = 10⁻³, pH = 3.", xp: 20, hint: "Negative logarithm." },
-        { id: "ACID_17", topic: "Acid-Base", text: "Why is hydrochloric acid described as a strong acid?", options: ["It has a high pH", "It is corrosive", "It fully ionises in water", "It reacts with all metals"], correct: "C", explanation: "A strong acid completely dissociates into H⁺ and its conjugate base in water.", xp: 15, hint: "Complete dissociation." },
+        { id: "ACID_17", topic: "Acid-Base", text: "Why is hydrochloric acid described as a strong acid?", options: ["It has a high pH", "It is highly corrosive", "It fully ionises in water to give 1 mole of H+ ions per mole of HCl", "It reacts with all metals and carbonates"], correct: "C", explanation: "A strong acid completely dissociates into H⁺ and its conjugate base in water.", xp: 15, hint: "Complete dissociation." },
         { id: "ACID_18", topic: "Acid-Base", text: "Which base is insoluble in water?", options: ["NaOH", "KOH", "Cu(OH)₂", "NH₃"], correct: "C", explanation: "Most metal hydroxides are insoluble except Group 1 and Ba(OH)₂. Copper(II) hydroxide is insoluble.", xp: 15, hint: "Forms a precipitate." },
         { id: "ACID_19", topic: "Acid-Base", text: "What is the name of the salt formed when sulfuric acid reacts with potassium hydroxide?", options: ["Potassium sulfate", "Potassium sulfite", "Potassium sulfide", "Potassium hydrogen sulfate"], correct: "A", explanation: "H₂SO₄ + 2KOH → K₂SO₄ + 2H₂O. The salt is potassium sulfate.", xp: 15, hint: "Sulfuric acid forms sulfate salts." },
         { id: "ACID_20", topic: "Acid-Base", text: "Which gas is produced when an acid reacts with a carbonate?", options: ["Hydrogen", "Oxygen", "Carbon dioxide", "Ammonia"], correct: "C", explanation: "Acid + carbonate → salt + water + carbon dioxide.", xp: 10, hint: "Effervescence." },
 
-        // Redox (20)
+        // Topic 7: Redox (20)
         { id: "REDOX_01", topic: "Redox", text: "In 2Mg + O₂ → 2MgO, Mg is?", options: ["Reduced", "Oxidised", "Catalyst", "Unchanged"], correct: "B", explanation: "Mg loses electrons (0 to +2).", xp: 15, hint: "Gains oxygen." },
-        { id: "REDOX_02", topic: "Redox", text: "Oxidation is?", options: ["Gain oxygen", "Loss electrons", "Gain hydrogen", "A and B"], correct: "D", explanation: "Both definitions correct.", xp: 10, hint: "OIL RIG." },
+        { id: "REDOX_02", topic: "Redox", text: "Oxidation is?", options: ["Gain of oxygen", "Loss of electrons", "Gain of hydrogen", "Both A and B"], correct: "D", explanation: "Both definitions are correct: gain of oxygen OR loss of electrons.", xp: 10, hint: "OIL RIG." },
         { id: "REDOX_03", topic: "Redox", text: "Which species is reduced in the reaction: Zn + CuSO₄ → ZnSO₄ + Cu?", options: ["Zn", "Cu²⁺", "SO₄²⁻", "Zn²⁺"], correct: "B", explanation: "Cu²⁺ gains electrons (2e⁻) to become Cu(0).", xp: 20, hint: "Gain of electrons = reduction." },
         { id: "REDOX_04", topic: "Redox", text: "What is the oxidation state of sulfur in SO₃?", options: ["+2", "+4", "+6", "-2"], correct: "C", explanation: "O is -2 × 3 = -6, so S must be +6 to balance.", xp: 20, hint: "Oxygen usually -2." },
         { id: "REDOX_05", topic: "Redox", text: "Which substance is an oxidising agent?", options: ["Mg", "H₂", "KMnO₄", "NaCl"], correct: "C", explanation: "KMnO₄ (potassium manganate(VII)) gains electrons easily, oxidising others.", xp: 15, hint: "Purple to colourless." },
         { id: "REDOX_06", topic: "Redox", text: "In the reaction: Cl₂ + 2NaBr → 2NaCl + Br₂, chlorine is:", options: ["Reduced", "Oxidised", "Both", "Neither"], correct: "A", explanation: "Cl₂ gains electrons (0 to -1), so it is reduced.", xp: 15, hint: "Chlorine becomes chloride ion." },
         { id: "REDOX_07", topic: "Redox", text: "Which change requires an oxidising agent?", options: ["Fe³⁺ → Fe²⁺", "Cl₂ → Cl⁻", "SO₃²⁻ → SO₄²⁻", "Cu²⁺ → Cu"], correct: "C", explanation: "SO₃²⁻ loses electrons (oxidation) to become SO₄²⁻, so needs an oxidising agent.", xp: 20, hint: "Oxidising agent causes oxidation." },
-        { id: "REDOX_08", topic: "Redox", text: "In the electrolysis of molten NaCl, what happens at the cathode?", options: ["Na⁺ is reduced to Na", "Cl⁻ is oxidised to Cl₂", "Na⁺ is oxidised to Na", "Cl⁻ is reduced to Cl₂"], correct: "A", explanation: "Cathode attracts positive ions. Na⁺ + e⁻ → Na (reduction).", xp: 20, hint: "Cathode = reduction." },
-        { id: "REDOX_09", topic: "Redox", text: "Which statement about a hydrogen fuel cell is correct?", options: ["Hydrogen is reduced to water", "Oxygen is oxidised to water", "Hydrogen is oxidised to water", "Water is split into hydrogen and oxygen"], correct: "C", explanation: "H₂ → 2H⁺ + 2e⁻ (oxidation), then 2H⁺ + ½O₂ + 2e⁻ → H₂O.", xp: 25, hint: "Hydrogen loses electrons." },
-        { id: "REDOX_10", topic: "Redox", text: "Which metal is most likely to be oxidised?", options: ["Copper", "Silver", "Magnesium", "Gold"], correct: "C", explanation: "Magnesium is highest in reactivity series → loses electrons most easily.", xp: 15, hint: "Reactivity series order." },
-        { id: "REDOX_11", topic: "Redox", text: "What is the oxidation state of manganese in KMnO₄? (K=+1, O=-2)", options: ["+2", "+4", "+6", "+7"], correct: "D", explanation: "K = +1, O₄ = -8, total = -7, so Mn must be +7 to balance.", xp: 20, hint: "Sum of oxidation states = 0." },
-        { id: "REDOX_12", topic: "Redox", text: "Which reaction is a disproportionation reaction?", options: ["Zn + CuSO₄ → ZnSO₄ + Cu", "2H₂O₂ → 2H₂O + O₂", "NaOH + HCl → NaCl + H₂O", "CaCO₃ → CaO + CO₂"], correct: "B", explanation: "Disproportionation is when the same element is both oxidised and reduced. In H₂O₂, oxygen goes from -1 to 0 and -2.", xp: 25, hint: "Same element oxidised and reduced." },
-        { id: "REDOX_13", topic: "Redox", text: "In the reaction: 2FeCl₃ + SnCl₂ → 2FeCl₂ + SnCl₄, which substance is the reducing agent?", options: ["FeCl₃", "SnCl₂", "FeCl₂", "SnCl₄"], correct: "B", explanation: "Sn²⁺ is oxidised to Sn⁴⁺ (loses electrons), so SnCl₂ is the reducing agent.", xp: 20, hint: "Reducing agent is oxidised." },
-        { id: "REDOX_14", topic: "Redox", text: "What colour change occurs when acidified KMnO₄ is used to test for a reducing agent?", options: ["Colourless to purple", "Purple to colourless", "Yellow to green", "Green to yellow"], correct: "B", explanation: "KMnO₄ (purple) is reduced to colourless Mn²⁺ by a reducing agent.", xp: 15, hint: "Purple disappears." },
-        { id: "REDOX_15", topic: "Redox", text: "In the electrolysis of aqueous sodium chloride with inert electrodes, what is produced at the anode?", options: ["Sodium", "Hydrogen", "Chlorine", "Oxygen"], correct: "C", explanation: "Chloride ions (Cl⁻) are discharged preferentially over hydroxide ions in concentrated NaCl, producing chlorine gas.", xp: 20, hint: "Halide ions." },
-        { id: "REDOX_16", topic: "Redox", text: "Which metal cannot be extracted from its oxide by reduction with carbon?", options: ["Zinc", "Iron", "Copper", "Sodium"], correct: "D", explanation: "Sodium is above carbon in the reactivity series, so it cannot be extracted by carbon reduction — electrolysis is needed.", xp: 20, hint: "Reactivity series." },
-        { id: "REDOX_17", topic: "Redox", text: "In a simple cell made of magnesium and copper electrodes in an electrolyte, which electrode is the anode?", options: ["Magnesium", "Copper", "Both", "Neither"], correct: "A", explanation: "Magnesium is more reactive, so it loses electrons (oxidation) and is the anode.", xp: 15, hint: "More reactive metal." },
-        { id: "REDOX_18", topic: "Redox", text: "What is the purpose of electroplating?", options: ["To purify a metal", "To coat one metal with another", "To extract a metal", "To produce hydrogen"], correct: "B", explanation: "Electroplating uses electrolysis to coat an object with a thin layer of another metal (e.g., silver plating).", xp: 10, hint: "Decorative or protective coating." },
-        { id: "REDOX_19", topic: "Redox", text: "Which statement about the reactivity series is correct?", options: ["A more reactive metal is more easily reduced", "A more reactive metal is more easily oxidised", "Reactivity decreases down the series", "Hydrogen is the most reactive"], correct: "B", explanation: "More reactive metals lose electrons more easily (oxidation).", xp: 15, hint: "Loss of electrons = oxidation." },
-        { id: "REDOX_20", topic: "Redox", text: "In the rusting of iron, what is reduced?", options: ["Iron", "Oxygen", "Water", "Hydrogen"], correct: "B", explanation: "Oxygen gains electrons to form OH⁻ or oxide ions — oxygen is reduced.", xp: 15, hint: "Gain of electrons." },
+        { id: "REDOX_08", topic: "Redox", text: "What is the oxidation state of manganese in KMnO₄? (K=+1, O=-2)", options: ["+2", "+4", "+6", "+7"], correct: "D", explanation: "K = +1, O₄ = -8, total = -7, so Mn must be +7 to balance.", xp: 20, hint: "Sum of oxidation states = 0." },
+        { id: "REDOX_09", topic: "Redox", text: "Which reaction is a disproportionation reaction?", options: ["Zn + CuSO₄ → ZnSO₄ + Cu", "2H₂O₂ → 2H₂O + O₂", "NaOH + HCl → NaCl + H₂O", "CaCO₃ → CaO + CO₂"], correct: "B", explanation: "Disproportionation is when the same element is both oxidised and reduced. In H₂O₂, oxygen goes from -1 to 0 and -2.", xp: 25, hint: "Same element oxidised and reduced." },
+        { id: "REDOX_10", topic: "Redox", text: "In the reaction: 2FeCl₃ + SnCl₂ → 2FeCl₂ + SnCl₄, which substance is the reducing agent?", options: ["FeCl₃", "SnCl₂", "FeCl₂", "SnCl₄"], correct: "B", explanation: "Sn²⁺ is oxidised to Sn⁴⁺ (loses electrons), so SnCl₂ is the reducing agent.", xp: 20, hint: "Reducing agent is oxidised." },
+        { id: "REDOX_11", topic: "Redox", text: "What colour change occurs when acidified KMnO₄ is used to test for a reducing agent?", options: ["Colourless to purple", "Purple to colourless", "Yellow to green", "Green to yellow"], correct: "B", explanation: "KMnO₄ (purple) is reduced to colourless Mn²⁺ by a reducing agent.", xp: 15, hint: "Purple disappears." },
+        { id: "REDOX_12", topic: "Redox", text: "Which metal is most likely to be oxidised?", options: ["Copper", "Silver", "Magnesium", "Gold"], correct: "C", explanation: "Magnesium is highest in reactivity series → loses electrons most easily.", xp: 15, hint: "Reactivity series order." },
+        { id: "REDOX_13", topic: "Redox", text: "What colour change occurs when acidified potassium dichromate(VI) (K₂Cr₂O₇) is reduced?", options: ["Orange to green", "Purple to colourless", "Green to orange", "Colourless to purple"], correct: "A", explanation: "Acidified K₂Cr₂O₇ (orange) contains Cr⁶⁺, which is reduced to Cr³⁺ (green) by a reducing agent.", xp: 20, hint: "Orange → green." },
+        { id: "REDOX_14", topic: "Redox", text: "What colour change occurs when potassium iodide (KI) is used to test for an oxidising agent?", options: ["Colourless to yellow/brown", "Yellow/brown to colourless", "Orange to green", "Purple to colourless"], correct: "A", explanation: "I⁻ (colourless) is oxidised to I₂ (yellow/brown) by an oxidising agent.", xp: 20, hint: "Iodine solution is brown." },
+        { id: "REDOX_15", topic: "Redox", text: "Which substance can be used to test for an oxidising agent?", options: ["Acidified KMnO₄", "Acidified K₂Cr₂O₇", "Potassium iodide (KI)", "Concentrated H₂SO₄"], correct: "C", explanation: "KI is a reducing agent — it is oxidised to I₂ (brown) by an oxidising agent.", xp: 15, hint: "Colourless to brown indicates oxidation." },
+        { id: "REDOX_16", topic: "Redox", text: "In the reaction: Fe₂O₃ + 3CO → 2Fe + 3CO₂, which substance is the reducing agent?", options: ["Fe₂O₃", "CO", "Fe", "CO₂"], correct: "B", explanation: "CO gains oxygen (becomes CO₂), so CO is oxidised — it is the reducing agent.", xp: 20, hint: "Reducing agent is oxidised." },
+        { id: "REDOX_17", topic: "Redox", text: "Which process involves a redox reaction?", options: ["Melting of ice", "Dissolving salt in water", "Rusting of iron", "Sublimation of dry ice"], correct: "C", explanation: "Rusting: iron is oxidised (loses electrons) and oxygen is reduced (gains electrons).", xp: 10, hint: "Chemical change with electron transfer." },
+        { id: "REDOX_18", topic: "Redox", text: "In the reaction: 2KBr + Cl₂ → 2KCl + Br₂, which statement is correct?", options: ["Cl₂ is reduced from 0 to -1", "Cl₂ is oxidised from 0 to -1", "Br⁻ is reduced to Br₂", "KBr is the oxidising agent"], correct: "A", explanation: "Cl₂ gains electrons (0 to -1), so it is reduced. Cl₂ is the oxidising agent.", xp: 15, hint: "Halogen displacement." },
+        { id: "REDOX_19", topic: "Redox", text: "Which metal can displace silver from silver nitrate solution?", options: ["Copper", "Silver", "Gold", "Platinum"], correct: "A", explanation: "Copper is more reactive than silver (above in reactivity series), so it displaces silver: Cu + 2Ag⁺ → Cu²⁺ + 2Ag.", xp: 15, hint: "More reactive metal displaces less reactive." },
+        { id: "REDOX_20", topic: "Redox", text: "In the reaction: C + 2H₂SO₄ → CO₂ + 2SO₂ + 2H₂O, what happens to carbon?", options: ["Carbon is reduced from 0 to +4", "Carbon is oxidised from 0 to +4", "Carbon is reduced from 0 to -4", "Carbon is oxidised from 0 to -4"], correct: "B", explanation: "Carbon goes from 0 (in C) to +4 (in CO₂) — loss of electrons means oxidation.", xp: 20, hint: "Oxidation state increases." },
 
-        // Rate of Reactions (20)
+        // Topic 8: Electrochemistry (20)
+        { id: "ELEC_01", topic: "Electrochemistry", text: "What is electrolysis?", options: ["Decomposition of a compound using heat", "Decomposition of a compound using electricity", "Reaction between an acid and a base", "Burning a substance in oxygen"], correct: "B", explanation: "Electrolysis is the decomposition of an ionic compound when molten or dissolved in water, using an electric current.", xp: 15, hint: "Electricity splits compounds." },
+        { id: "ELEC_02", topic: "Electrochemistry", text: "Why does an ionic compound conduct electricity when molten but not when solid?", options: ["Ions are free to move in molten state but fixed in lattice when solid", "Electrons can flow in molten state", "Molten salt is hotter", "Solid salt is an insulator"], correct: "A", explanation: "In solid NaCl, ions are held in a fixed lattice. When molten, ions become mobile and can carry charge.", xp: 20, hint: "Movement of ions needed." },
+        { id: "ELEC_03", topic: "Electrochemistry", text: "In the electrolysis of molten sodium chloride, what is produced at the cathode?", options: ["Chlorine gas", "Sodium metal", "Oxygen gas", "Hydrogen gas"], correct: "B", explanation: "Cathode: Na⁺ + e⁻ → Na (sodium metal forms).", xp: 15, hint: "Positive ions go to cathode." },
+        { id: "ELEC_04", topic: "Electrochemistry", text: "In the electrolysis of molten sodium chloride, what is produced at the anode?", options: ["Chlorine gas", "Sodium metal", "Oxygen gas", "Hydrogen gas"], correct: "A", explanation: "Anode: 2Cl⁻ → Cl₂ + 2e⁻ (chlorine gas forms).", xp: 15, hint: "Negative ions go to anode." },
+        { id: "ELEC_05", topic: "Electrochemistry", text: "Why does molten sodium chloride conduct electricity but solid sodium chloride does not?", options: ["Ions are free to move in molten state but fixed in lattice when solid", "Electrons can flow in molten state", "Molten salt is hotter", "Solid salt is an insulator"], correct: "A", explanation: "In solid NaCl, ions are held in a fixed lattice. When molten, ions become mobile and can carry charge.", xp: 20, hint: "Movement of ions needed." },
+        { id: "ELEC_06", topic: "Electrochemistry", text: "In the electrolysis of molten lead(II) bromide, what is produced at the cathode?", options: ["Lead", "Bromine", "Oxygen", "Hydrogen"], correct: "A", explanation: "Cathode: Pb²⁺ + 2e⁻ → Pb (lead metal forms).", xp: 15, hint: "Lead ions gain electrons." },
+        { id: "ELEC_07", topic: "Electrochemistry", text: "In the electrolysis of molten lead(II) bromide, what is produced at the anode?", options: ["Lead", "Bromine", "Oxygen", "Hydrogen"], correct: "B", explanation: "Anode: 2Br⁻ → Br₂ + 2e⁻ (bromine gas forms).", xp: 15, hint: "Bromide ions lose electrons." },
+        { id: "ELEC_08", topic: "Electrochemistry", text: "During electrolysis, positive ions move towards which electrode?", options: ["Anode", "Cathode", "Both", "Neither"], correct: "B", explanation: "Cathode is negative, attracting positive ions (cations).", xp: 10, hint: "Opposites attract." },
+        { id: "ELEC_09", topic: "Electrochemistry", text: "During electrolysis, negative ions move towards which electrode?", options: ["Anode", "Cathode", "Both", "Neither"], correct: "A", explanation: "Anode is positive, attracting negative ions (anions).", xp: 10, hint: "Opposites attract." },
+        { id: "ELEC_10", topic: "Electrochemistry", text: "In the electrolysis of concentrated aqueous sodium chloride, what is produced at the anode?", options: ["Oxygen", "Chlorine", "Sodium", "Hydrogen"], correct: "B", explanation: "Concentrated Cl⁻ ions are discharged preferentially over OH⁻, producing chlorine gas.", xp: 20, hint: "Halide ions." },
+        { id: "ELEC_11", topic: "Electrochemistry", text: "In the electrolysis of dilute aqueous sodium chloride, what is produced at the anode?", options: ["Oxygen", "Chlorine", "Sodium", "Hydrogen"], correct: "A", explanation: "Dilute solution has fewer Cl⁻ ions, so OH⁻ is discharged, producing oxygen.", xp: 20, hint: "Hydroxide ions." },
+        { id: "ELEC_12", topic: "Electrochemistry", text: "In the electrolysis of aqueous copper(II) sulfate with inert electrodes, what is produced at the cathode?", options: ["Copper", "Oxygen", "Hydrogen", "Sulfur dioxide"], correct: "A", explanation: "Cu²⁺ is lower than H⁺ in reactivity series, so Cu²⁺ is discharged: Cu²⁺ + 2e⁻ → Cu.", xp: 15, hint: "Copper plates out." },
+        { id: "ELEC_13", topic: "Electrochemistry", text: "Which factor affects selective discharge of ions during electrolysis?", options: ["Position in reactivity series", "Concentration", "Type of electrode", "All of the above"], correct: "D", explanation: "Selective discharge depends on ion reactivity, concentration, and electrode material.", xp: 20, hint: "Multiple factors." },
+        { id: "ELEC_14", topic: "Electrochemistry", text: "In the electrolysis of aqueous copper(II) sulfate with copper electrodes, what happens to the anode?", options: ["Copper deposits on anode", "Copper dissolves from anode", "Oxygen gas forms", "Hydrogen gas forms"], correct: "B", explanation: "Copper anode oxidises: Cu → Cu²⁺ + 2e⁻, so the anode dissolves.", xp: 20, hint: "Active electrode." },
+        { id: "ELEC_15", topic: "Electrochemistry", text: "What is the purpose of electroplating?", options: ["To purify a metal", "To coat one metal with a thin layer of another metal", "To extract metal from ore", "To produce hydrogen fuel"], correct: "B", explanation: "Electroplating uses electrolysis to deposit a thin layer of metal onto an object.", xp: 15, hint: "Decorative or protective coating." },
+        { id: "ELEC_16", topic: "Electrochemistry", text: "In a simple cell made of zinc and copper electrodes in an electrolyte, which metal is the anode?", options: ["Zinc", "Copper", "Both", "Neither"], correct: "A", explanation: "Zinc is more reactive, so it loses electrons (oxidation) and is the anode.", xp: 15, hint: "More reactive metal corrodes." },
+        { id: "ELEC_17", topic: "Electrochemistry", text: "What is the function of a salt bridge in a simple cell?", options: ["To produce electricity", "To allow ions to flow between half-cells", "To stop the reaction", "To act as an electrode"], correct: "B", explanation: "A salt bridge completes the circuit by allowing ions to move, maintaining electrical neutrality.", xp: 20, hint: "Completes circuit." },
+        { id: "ELEC_18", topic: "Electrochemistry", text: "Which statement about a hydrogen fuel cell is correct?", options: ["Hydrogen is reduced to water", "Oxygen is oxidised to water", "Hydrogen is oxidised to water", "Water is split into hydrogen and oxygen"], correct: "C", explanation: "H₂ → 2H⁺ + 2e⁻ (oxidation), then 2H⁺ + ½O₂ + 2e⁻ → H₂O.", xp: 20, hint: "Hydrogen loses electrons." },
+        { id: "ELEC_19", topic: "Electrochemistry", text: "What are the products of a hydrogen fuel cell?", options: ["Water and electricity", "Carbon dioxide and water", "Hydrogen and oxygen", "Heat only"], correct: "A", explanation: "Fuel cells convert chemical energy directly into electrical energy, producing water as a byproduct.", xp: 15, hint: "Clean energy." },
+        { id: "ELEC_20", topic: "Electrochemistry", text: "Why are fuel cells considered more environmentally friendly than combustion engines?", options: ["They produce more CO₂", "They produce only water as a product (no CO₂)", "They use less fuel", "They are cheaper"], correct: "B", explanation: "Hydrogen fuel cells produce only water and electricity, with no CO₂ or pollutant emissions.", xp: 15, hint: "No carbon emissions." },
+
+        // Topic 9: Rate of Reactions (20)
         { id: "RATE_01", topic: "Rate of Reactions", text: "Increasing concentration increases rate because?", options: ["Particles faster", "More frequent collisions", "Lower Ea", "Higher ΔH"], correct: "B", explanation: "More particles per volume → more collisions.", xp: 15, hint: "More crowded." },
         { id: "RATE_02", topic: "Rate of Reactions", text: "Catalyst increases rate by?", options: ["Increasing temp", "Lowering Ea", "Increasing particle size", "Changing ΔH"], correct: "B", explanation: "Provides alternative pathway with lower activation energy.", xp: 15, hint: "Lowers the hurdle." },
         { id: "RATE_03", topic: "Rate of Reactions", text: "Which factor does NOT affect the rate of a chemical reaction?", options: ["Temperature", "Concentration", "Colour of reactant", "Surface area"], correct: "C", explanation: "Colour does not affect reaction rate.", xp: 10, hint: "Think about what affects collisions." },
@@ -460,7 +523,7 @@
         { id: "RATE_19", topic: "Rate of Reactions", text: "Which method could investigate the effect of concentration on rate?", options: ["Use different acids at same concentration", "Use same volume of different concentrations of acid", "Use different temperatures", "Use different catalysts"], correct: "B", explanation: "Varying concentration while keeping other factors constant isolates the effect of concentration.", xp: 15, hint: "Only change one variable." },
         { id: "RATE_20", topic: "Rate of Reactions", text: "What does a catalyst provide to lower activation energy?", options: ["More heat", "Higher concentration", "An alternative reaction pathway", "More surface area"], correct: "C", explanation: "A catalyst provides an alternative pathway with lower activation energy, making it easier for particles to react.", xp: 15, hint: "Different route." },
 
-        // Chemical Energetics (20)
+        // Topic 10: Chemical Energetics (20)
         { id: "ENERGY_01", topic: "Chemical Energetics", text: "For an exothermic reaction, ΔH is:", options: ["Positive", "Negative", "Zero", "Depends"], correct: "B", explanation: "Heat released to surroundings.", xp: 10, hint: "Feels hot." },
         { id: "ENERGY_02", topic: "Chemical Energetics", text: "Which process is endothermic?", options: ["Burning methane", "Neutralisation", "Photosynthesis", "Respiration"], correct: "C", explanation: "Photosynthesis absorbs light energy.", xp: 15, hint: "Plants need sunlight." },
         { id: "ENERGY_03", topic: "Chemical Energetics", text: "In an exothermic reaction, the products have:", options: ["More energy than reactants", "Less energy than reactants", "Same energy as reactants", "No energy"], correct: "B", explanation: "Energy is released to surroundings.", xp: 15, hint: "Energy leaves the system." },
@@ -482,7 +545,7 @@
         { id: "ENERGY_19", topic: "Chemical Energetics", text: "If ΔH is negative, the reaction is:", options: ["Endothermic", "Exothermic", "At equilibrium", "Not possible"], correct: "B", explanation: "Negative ΔH means energy is released to surroundings (exothermic).", xp: 10, hint: "Negative = heat out." },
         { id: "ENERGY_20", topic: "Chemical Energetics", text: "Which fuel produces the most energy per gram?", options: ["Hydrogen", "Methane", "Petrol", "Coal"], correct: "A", explanation: "Hydrogen has the highest energy density per gram (about 120-140 MJ/kg).", xp: 20, hint: "Lightest element." },
 
-        // Periodic Table (20)
+        // Topic 11: Periodic Table (20)
         { id: "PERIODIC_01", topic: "Periodic Table", text: "Elements in same group have same?", options: ["Shells", "Valence electrons", "Atomic mass", "Reactivity"], correct: "B", explanation: "Group = same outer electrons.", xp: 10, hint: "Column." },
         { id: "PERIODIC_02", topic: "Periodic Table", text: "Which element is a noble gas?", options: ["Chlorine", "Oxygen", "Argon", "Hydrogen"], correct: "C", explanation: "Group 18 = noble gases.", xp: 10, hint: "Unreactive gases." },
         { id: "PERIODIC_03", topic: "Periodic Table", text: "Which element is a halogen?", options: ["Sodium", "Magnesium", "Bromine", "Calcium"], correct: "C", explanation: "Group 17 = halogens.", xp: 10, hint: "Forms salts with metals." },
@@ -505,25 +568,34 @@
         { id: "PERIODIC_20", topic: "Periodic Table", text: "What is the outer electronic configuration of elements in Group 17?", options: ["ns¹", "ns²", "ns²np⁵", "ns²np⁶"], correct: "C", explanation: "Halogens have 7 valence electrons: ns²np⁵.", xp: 15, hint: "One electron short of noble gas." }
     ];
 
+    // ==================== BADGES (16 badges with tooltips) ====================
     const BADGES = [
-        { id: "first_correct", name: "🎉 First Step", description: "Answer first question correctly", icon: "🎉" },
-        { id: "streak_5", name: "🔥 Fire Starter", description: "5 correct answers in a row", icon: "🔥" },
-        { id: "streak_10", name: "⚡ Unstoppable", description: "10 correct answers in a row", icon: "⚡" },
-        { id: "xp_500", name: "⭐ Chemistry Enthusiast", description: "Reach 500 total XP", icon: "⭐" },
-        { id: "xp_1000", name: "🏅 Master Chemist", description: "Reach 1000 total XP", icon: "🏅" },
-        { id: "topic_master", name: "📚 Topic Master", description: "Complete all questions in a topic", icon: "📚" },
-        { id: "master_of_molecules", name: "🧪 Master of Molecules", description: "Completed all questions", icon: "🧪" },
-        { id: "perfect_topic", name: "👑 Perfectionist", description: "Complete a topic with 0 wrong answers", icon: "👑" }
+        { id: "first_correct", name: "🎉 First Step", description: "Answer your first question correctly", icon: "🎉", tooltip: "Answer your first question correctly" },
+        { id: "streak_5", name: "🔥 Fire Starter", description: "Get 5 correct answers in a row", icon: "🔥", tooltip: "Get 5 correct answers in a row" },
+        { id: "streak_10", name: "⚡ Unstoppable", description: "Get 10 correct answers in a row", icon: "⚡", tooltip: "Get 10 correct answers in a row" },
+        { id: "perfectionist", name: "👑 Perfectionist", description: "Complete a topic with 0 wrong answers", icon: "👑", tooltip: "Complete any topic with 0 wrong answers" },
+        { id: "heart_of_gold", name: "💛 Heart of Gold", description: "Answer 50 total correct answers", icon: "💛", tooltip: "Answer 50 total correct answers" },
+        { id: "never_give_up", name: "💪 Never Give Up", description: "Lose 20 hearts total (persistence award)", icon: "💪", tooltip: "Lose 20 hearts total across all gameplay" },
+        { id: "big_spender", name: "💰 Big Spender", description: "Spend 200 total XP in the shop", icon: "💰", tooltip: "Spend 200 total XP in the shop" },
+        { id: "hint_hoarder", name: "💡 Hint Hoarder", description: "Buy 10 hints total", icon: "💡", tooltip: "Buy 10 hints total from the shop" },
+        { id: "professor", name: "🧑‍🏫 The Professor", description: "Achieve 90% accuracy across 100 questions", icon: "🧑‍🏫", tooltip: "Achieve 90% accuracy across 100 questions" },
+        { id: "flawless_victory", name: "✨ Flawless Victory", description: "Complete 3 topics with 0 wrong answers", icon: "✨", tooltip: "Complete 3 different topics with 0 wrong answers" },
+        { id: "topic_master", name: "📚 Topic Master", description: "Complete all questions in any topic", icon: "📚", tooltip: "Complete all 20 questions in any single topic" },
+        { id: "xp_500", name: "⭐ Chemistry Enthusiast", description: "Reach 500 total XP", icon: "⭐", tooltip: "Reach 500 total XP" },
+        { id: "xp_1000", name: "🏅 Master Chemist", description: "Reach 1000 total XP", icon: "🏅", tooltip: "Reach 1000 total XP" },
+        { id: "xp_2000", name: "🔮 Diamond Dominator", description: "Reach 2000 total XP", icon: "🔮", tooltip: "Reach 2000 total XP" },
+        { id: "master_of_molecules", name: "🧪 Master of Molecules", description: "Complete ALL 220 questions", icon: "🧪", tooltip: "Complete every single question in ChemMaster — ULTIMATE ACHIEVEMENT!" }
     ];
 
     const TITLES = [
-        { minXP: 0, title: "🥉 Bronze Chemist" },
-        { minXP: 200, title: "🥈 Silver Chemist" },
-        { minXP: 500, title: "🥇 Gold Chemist" },
-        { minXP: 1000, title: "💎 Platinum Chemist" },
-        { minXP: 2000, title: "🔮 Diamond Chemist" }
+        { minXP: 0, title: "🥉 Bronze Scholar" },
+        { minXP: 200, title: "🥈 Silver Scholar" },
+        { minXP: 500, title: "🥇 Gold Graduate" },
+        { minXP: 1000, title: "💎 Platinum Pro" },
+        { minXP: 2000, title: "🔮 Diamond Dominator" }
     ];
 
+    // ==================== STORAGE FUNCTIONS ====================
     function getHearts() { return parseInt(localStorage.getItem("chem_hearts") || "5"); }
     function setHearts(val) { localStorage.setItem("chem_hearts", Math.min(5, Math.max(0, val))); render(); }
     function getXP() { return parseInt(localStorage.getItem("chem_xp") || "0"); }
@@ -536,6 +608,28 @@
     function isCompleted(qId, topic) { return !!getCompleted()[`${qId}_${topic}`]; }
     function getUnlockedBadges() { return JSON.parse(localStorage.getItem("chem_badges") || "[]"); }
     function unlockBadge(badgeId) { let unlocked = getUnlockedBadges(); if (!unlocked.includes(badgeId)) { unlocked.push(badgeId); localStorage.setItem("chem_badges", JSON.stringify(unlocked)); showPrizeModal(badgeId); return true; } return false; }
+
+    // Shop tracking
+    let totalXPSpent = parseInt(localStorage.getItem("chem_xp_spent") || "0");
+    let totalHintsBought = parseInt(localStorage.getItem("chem_hints_bought") || "0");
+    let totalHeartsLost = parseInt(localStorage.getItem("chem_hearts_lost") || "0");
+    let totalCorrectAnswers = parseInt(localStorage.getItem("chem_correct_total") || "0");
+    let totalQuestionsAnswered = parseInt(localStorage.getItem("chem_questions_answered") || "0");
+    let topicsPerfected = JSON.parse(localStorage.getItem("chem_topics_perfected") || "[]");
+
+    function recordXPSpent(amount) { totalXPSpent += amount; localStorage.setItem("chem_xp_spent", totalXPSpent); checkBigSpender(); }
+    function recordHintBought() { totalHintsBought++; localStorage.setItem("chem_hints_bought", totalHintsBought); checkHintHoarder(); }
+    function recordHeartLoss() { totalHeartsLost++; localStorage.setItem("chem_hearts_lost", totalHeartsLost); checkNeverGiveUp(); }
+    function recordCorrectAnswer() { totalCorrectAnswers++; localStorage.setItem("chem_correct_total", totalCorrectAnswers); checkHeartOfGold(); checkProfessor(); }
+    function recordQuestionAnswered() { totalQuestionsAnswered++; localStorage.setItem("chem_questions_answered", totalQuestionsAnswered); checkProfessor(); }
+
+    function checkHeartOfGold() { if (totalCorrectAnswers >= 50) unlockBadge("heart_of_gold"); }
+    function checkNeverGiveUp() { if (totalHeartsLost >= 20) unlockBadge("never_give_up"); }
+    function checkBigSpender() { if (totalXPSpent >= 200) unlockBadge("big_spender"); }
+    function checkHintHoarder() { if (totalHintsBought >= 10) unlockBadge("hint_hoarder"); }
+    function checkProfessor() { if (totalQuestionsAnswered >= 100 && (totalCorrectAnswers / totalQuestionsAnswered) >= 0.9) unlockBadge("professor"); }
+    function checkFlawlessVictory() { if (topicsPerfected.length >= 3) unlockBadge("flawless_victory"); }
+    function recordPerfectedTopic(topic) { if (!topicsPerfected.includes(topic)) { topicsPerfected.push(topic); localStorage.setItem("chem_topics_perfected", JSON.stringify(topicsPerfected)); checkFlawlessVictory(); } }
 
     function saveCurrentIndex(topic, index) {
         let indexes = JSON.parse(localStorage.getItem("chem_topic_indexes") || "{}");
@@ -571,11 +665,16 @@
     function checkAllQuestionsComplete() {
         if (QUESTION_SET.every(q => isCompleted(q.id, q.topic))) unlockBadge("master_of_molecules");
     }
-    function checkXPBadges(xp) { if (xp >= 500) unlockBadge("xp_500"); if (xp >= 1000) unlockBadge("xp_1000"); }
+    function checkXPBadges(xp) { if (xp >= 500) unlockBadge("xp_500"); if (xp >= 1000) unlockBadge("xp_1000"); if (xp >= 2000) unlockBadge("xp_2000"); }
     function checkStreakBadges(streak) { if (streak >= 5) unlockBadge("streak_5"); if (streak >= 10) unlockBadge("streak_10"); }
     function checkFirstCorrect() { unlockBadge("first_correct"); }
     function checkTopicMaster(topic, qlist) { if (qlist.every(q => isCompleted(q.id, topic))) unlockBadge("topic_master"); }
-    function checkPerfectTopic(topic, qlist, hadWrong) { if (!hadWrong && qlist.every(q => isCompleted(q.id, topic))) unlockBadge("perfect_topic"); }
+    function checkPerfectTopic(topic, qlist, hadWrong) {
+        if (!hadWrong && qlist.every(q => isCompleted(q.id, topic))) {
+            unlockBadge("perfectionist");
+            recordPerfectedTopic(topic);
+        }
+    }
 
     function getNextTitleInfo() {
         let xp = getXP();
@@ -588,6 +687,7 @@
         return { currentTitle: TITLES[TITLES.length-1].title, nextTitle: "MAX RANK", xpNeeded: 0 };
     }
 
+    // ==================== APP STATE ====================
     let currentTopic = localStorage.getItem("chem_topic") || "Experimental Chemistry";
     let currentIndex = getSavedIndex(currentTopic);
     let answered = false;
@@ -611,13 +711,17 @@
             let q = getTopicQuestions()[currentIndex];
             alert(`💡 HINT: ${q.hint || "Read the question carefully!"}`);
             hintUsedForCurrent = true;
+            recordHintBought();
+            recordXPSpent(10);
         } else { alert("Not enough XP! Need 10 XP for a hint."); }
     }
+
     function buyHeart() {
         if (getHearts() >= 5) { alert("Hearts already full!"); return; }
-        if (spendXP(30)) { setHearts(getHearts() + 1); alert("❤️ Heart restored! +1 heart."); }
+        if (spendXP(30)) { setHearts(getHearts() + 1); alert("❤️ Heart restored! +1 heart."); recordXPSpent(30); }
         else { alert("Need 30 XP for a heart!"); }
     }
+
     function showPrizeModal(badgeId) {
         let badge = BADGES.find(b => b.id === badgeId);
         if (badge) { pendingPrize = badge; render(); }
@@ -663,7 +767,7 @@
                     <span class="arrow">▲</span>
                 </div>
                 <div class="badge-container">
-                    ${BADGES.map(b => `<div class="badge ${unlocked.includes(b.id) ? 'unlocked' : 'locked'}">${b.icon} ${b.name}</div>`).join('')}
+                    ${BADGES.map(b => `<div class="badge ${unlocked.includes(b.id) ? 'unlocked' : 'locked'}" data-tooltip="${b.tooltip}">${b.icon} ${b.name}</div>`).join('')}
                 </div>
                 <div class="next-title-info">
                     📍 Next Title: ${nextTitleInfo.nextTitle} ${nextTitleInfo.xpNeeded > 0 ? `(Need ${nextTitleInfo.xpNeeded} more XP)` : "(MAX RANK ACHIEVED! 🎉)"}
@@ -789,6 +893,7 @@
             let multiplier = getMultiplier();
             let finalXP = earned * multiplier;
             addXP(finalXP);
+            recordCorrectAnswer();
             if (multiplier === 2) consumeDoubleXP();
             if (!isCompleted(question.id, question.topic)) {
                 setCompleted(question.id, question.topic);
@@ -802,8 +907,10 @@
             hadWrong = true;
             let newHearts = getHearts() - 1;
             setHearts(newHearts);
+            recordHeartLoss();
             if (newHearts === 0) alert("💀 0 hearts! Reset topic to continue.");
         }
+        recordQuestionAnswered();
         render();
     }
 
